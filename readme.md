@@ -1,0 +1,3 @@
+# .
+
+![Veritabanı Diagramı](dbDiagram.svg)
