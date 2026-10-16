@@ -1,0 +1,1 @@
+OdaTipi, Oda, SezonFiyati, Misafir, Kullanici, Personel, Rezervasyon, Konaklama, EkHizmet, KonaklamaHizmeti, Odeme, TemizlikKaydi, IslemLog. En az 3NF; Harici olarak Role Tablosu, ve Otel Standart Lux, gibi ayrımları Yapan tablolar

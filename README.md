@@ -1,4 +1,4 @@
-# Database And Management Homework
+# Otel Rezervasyon Projesi 
 
 🌍 **Dil / Language:** [Türkçe](#-proje-amacı) | [English](#-project-purpose)
 
@@ -46,9 +46,11 @@ npm start
 * **Modern Express & TypeScript Yapısı:** Proje, Express'in en güncel 5.x sürümü ve katı tip denetimi sağlayan TypeScript konfigürasyonu ile yapılandırılmıştır.
 * **Ortam Değişkenleri Yönetimi:** Güvenlik ve yapılandırma yönetimi için `.example.env` şablonu dahil edilmiştir.
 
+<small>Proje, .vscode klasörünü ve settings.json/ -->"prisma.pinToPrisma6": true ayarını gerektirebilir.</small>
+
 ---
 
-# Database And Management Homework (English)
+# Hotel Rezervation Project (English)
 
 ## 🎯 Project Purpose
 This project is an academic and practical implementation developed for a Database and Management coursework. The primary goal is to architect a normalized relational database schema, define entity relationships, and provide a manageable interface for these data structures using a modern TypeScript-based REST API.
@@ -91,3 +93,8 @@ npm start
 * **Database Architectural Design:** Includes `dbDiagram.svg` and `Tables.md` files at the root level, documenting entity attributes, primary/foreign key mappings, and table relations.
 * **Modern TypeScript & Express Stack:** Leverages the latest Express 5.x along with strong typing via TypeScript for reliable and maintainable code execution.
 * **Environment Configuration:** Pre-configured with `.example.env` for safe and reproducible environment setup.
+
+<small>The Project may require a .vscode folder and the setting in settings.json/ -->"prisma.pinToPrisma6": true</small>
+
+## Proje Veritabanı Tasarımı / Project Database Design
+![db](dbDiagram.svg)
