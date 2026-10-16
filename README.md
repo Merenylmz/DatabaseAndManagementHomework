@@ -11,10 +11,10 @@ Depo içerisinde yer alan şema ve dokümantasyonlar (`Tables.md`, `dbDiagram.sv
 
 ## 🛠️ Kullanılan Teknolojiler
 * **Çalışma Zamanı (Runtime):** Node.js
-* **Programlama Dili:** TypeScript
-* **Web Framework:** Express.js (v5.x)
-* **Geliştirme Araçları:** Nodemon, ts-node, ts-node-dev
-* **Veritabanı Tasarım ve Dokümantasyon:** dbDiagram (SVG ERD), Markdown şema dokümantasyonu
+* **Programlama Dili:** TypeScript, PostgreSQL
+* **Web Framework:** Express.js
+* **Geliştirme Araçları:** Redis, ts-node, ts-node-dev, JWT, Prisma-cli, nodemailer, worker-threads
+* **Veritabanı Tasarım ve Dokümantasyon:** dbDiagram (SVG ERD), DBeaver, PgAdmin, Prisma
 
 ## 🚀 Kurulum ve Çalıştırma
 
@@ -59,10 +59,10 @@ The data models and relational schemas are documented and visualized through `Ta
 
 ## 🛠️ Technologies Used
 * **Runtime:** Node.js
-* **Programming Language:** TypeScript
-* **Web Framework:** Express.js (v5.x)
-* **Development Tooling:** Nodemon, ts-node, ts-node-dev
-* **Database Design & Documentation:** dbDiagram (SVG ERD), Markdown Schema Specs
+* **Programming Language:** TypeScript, PostgreSQL
+* **Web Framework:** Express.js
+* **Development Tooling:** Redis, ts-node, ts-node-dev, JWT, Prisma-cli, nodemailer, worker-threads
+* **Database Design & Documentation:** dbDiagram (SVG ERD), DBeaver, PgAdmin, Prisma
 
 ## 🚀 Installation and Usage
 
