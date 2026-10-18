@@ -6,3 +6,78 @@ datasource db {
   provider = "postgresql"
   url = env("DATABASE_URL")
 }
+
+// Enumlar
+
+enum OdaDurumu {
+  bos
+  dolu
+  temizlikte
+  bakimda
+
+  @@map("oda_durumu")
+}
+
+enum KullaniciRol {
+  misafir
+  resepsiyon
+  yonetici
+
+  @@map("kullanici_rol")
+}
+
+enum RezervasyonDurumu {
+  beklemede
+  onayli
+  iptal
+  tamamlandi
+
+  @@map("rezervasyon_durumu")
+}
+
+enum OdemeTuru {
+  nakit
+  kredi_karti
+  havale
+
+  @@map("odeme_turu")
+}
+
+// Oda tablolari
+
+model OdaTipi {
+  id          Int     @id @default(autoincrement())
+  ad          String  @db.VarChar(50)
+  kapasite    Int
+  aciklama    String? @db.Text
+  temel_fiyat Decimal @db.Decimal(10, 2)
+
+  odalar          Oda[]
+  sezon_fiyatlari SezonFiyati[]
+
+  @@map("oda_tipi")
+}
+
+model Oda {
+  id           Int        @id @default(autoincrement())
+  oda_numarasi String     @unique @db.VarChar(10)
+  kat          Int
+  durum        OdaDurumu? @default(bos)
+  oda_tipi_id  Int
+
+  oda_tipi OdaTipi @relation(fields: [oda_tipi_id], references: [id])
+
+  @@map("oda")
+}
+
+model SezonFiyati {
+  id               Int      @id @default(autoincrement())
+  oda_tipi_id      Int
+  baslangic_tarihi DateTime @db.Date
+  bitis_tarihi     DateTime @db.Date
+  gecelik_fiyat    Decimal  @db.Decimal(10, 2)
+
+  oda_tipi OdaTipi @relation(fields: [oda_tipi_id], references: [id])
+
+  @@map("sezon_fiyati")
+}
