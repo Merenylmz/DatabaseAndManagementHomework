@@ -81,3 +81,46 @@ model SezonFiyati {
 
   @@map("sezon_fiyati")
 }
+
+// Kisi tablolari
+
+model Misafir {
+  id           Int       @id @default(autoincrement())
+  ad           String    @db.VarChar(50)
+  soyad        String    @db.VarChar(50)
+  kimlik_no    String    @unique @db.VarChar(20)
+  telefon      String?   @db.VarChar(20)
+  e_posta      String?   @db.VarChar(100)
+  dogum_tarihi DateTime? @db.Date
+
+  kullanici Kullanici?
+
+  @@map("misafir")
+}
+
+model Personel {
+  id               Int       @id @default(autoincrement())
+  ad               String    @db.VarChar(50)
+  soyad            String    @db.VarChar(50)
+  gorev            String    @db.VarChar(50)
+  ise_giris_tarihi DateTime? @db.Date
+
+  kullanici Kullanici?
+
+  @@map("personel")
+}
+
+// Giris yapan hesap : Misafir veya Personele bagli
+model Kullanici {
+  id            Int          @id @default(autoincrement())
+  kullanici_adi String       @unique @db.VarChar(50)
+  sifre_hash    String       @db.VarChar(255)
+  rol           KullaniciRol
+  misafir_id    Int?         @unique
+  personel_id   Int?         @unique
+
+  misafir  Misafir?  @relation(fields: [misafir_id], references: [id])
+  personel Personel? @relation(fields: [personel_id], references: [id])
+
+  @@map("kullanici")
+}
