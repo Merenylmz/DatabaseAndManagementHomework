@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 // Enumlar
@@ -65,7 +65,8 @@ model Oda {
   durum        OdaDurumu? @default(bos)
   oda_tipi_id  Int
 
-  oda_tipi OdaTipi @relation(fields: [oda_tipi_id], references: [id])
+  oda_tipi       OdaTipi       @relation(fields: [oda_tipi_id], references: [id])
+  rezervasyonlar Rezervasyon[]
 
   @@map("oda")
 }
@@ -93,7 +94,8 @@ model Misafir {
   e_posta      String?   @db.VarChar(100)
   dogum_tarihi DateTime? @db.Date
 
-  kullanici Kullanici?
+  kullanici      Kullanici?
+  rezervasyonlar Rezervasyon[]
 
   @@map("misafir")
 }
@@ -123,4 +125,22 @@ model Kullanici {
   personel Personel? @relation(fields: [personel_id], references: [id])
 
   @@map("kullanici")
+}
+
+// Rezervasyon tablolari
+
+model Rezervasyon {
+  id               Int               @id @default(autoincrement())
+  misafir_id       Int
+  oda_id           Int
+  giris_tarihi     DateTime          @db.Date
+  cikis_tarihi     DateTime          @db.Date
+  kisi_sayisi      Int
+  durum            RezervasyonDurumu @default(beklemede)
+  olusturma_tarihi DateTime          @default(now())
+
+  misafir Misafir @relation(fields: [misafir_id], references: [id])
+  oda     Oda     @relation(fields: [oda_id], references: [id])
+
+  @@map("rezervasyon")
 }
