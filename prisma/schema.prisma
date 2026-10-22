@@ -4,5 +4,143 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
+}
+
+// Enumlar
+
+enum OdaDurumu {
+  bos
+  dolu
+  temizlikte
+  bakimda
+
+  @@map("oda_durumu")
+}
+
+enum KullaniciRol {
+  misafir
+  resepsiyon
+  yonetici
+
+  @@map("kullanici_rol")
+}
+
+enum RezervasyonDurumu {
+  beklemede
+  onayli
+  iptal
+  tamamlandi
+
+  @@map("rezervasyon_durumu")
+}
+
+enum OdemeTuru {
+  nakit
+  kredi_karti
+  havale
+
+  @@map("odeme_turu")
+}
+
+// Oda tablolari
+
+model OdaTipi {
+  id          Int     @id @default(autoincrement())
+  ad          String  @db.VarChar(50)
+  kapasite    Int
+  aciklama    String? @db.Text
+  temel_fiyat Decimal @db.Decimal(10, 2)
+
+  odalar          Oda[]
+  sezon_fiyatlari SezonFiyati[]
+
+  @@map("oda_tipi")
+}
+
+model Oda {
+  id           Int        @id @default(autoincrement())
+  oda_numarasi String     @unique @db.VarChar(10)
+  kat          Int
+  durum        OdaDurumu? @default(bos)
+  oda_tipi_id  Int
+
+  oda_tipi       OdaTipi       @relation(fields: [oda_tipi_id], references: [id])
+  rezervasyonlar Rezervasyon[]
+
+  @@map("oda")
+}
+
+model SezonFiyati {
+  id               Int      @id @default(autoincrement())
+  oda_tipi_id      Int
+  baslangic_tarihi DateTime @db.Date
+  bitis_tarihi     DateTime @db.Date
+  gecelik_fiyat    Decimal  @db.Decimal(10, 2)
+
+  oda_tipi OdaTipi @relation(fields: [oda_tipi_id], references: [id])
+
+  @@map("sezon_fiyati")
+}
+
+// Kisi tablolari
+
+model Misafir {
+  id           Int       @id @default(autoincrement())
+  ad           String    @db.VarChar(50)
+  soyad        String    @db.VarChar(50)
+  kimlik_no    String    @unique @db.VarChar(20)
+  telefon      String?   @db.VarChar(20)
+  e_posta      String?   @db.VarChar(100)
+  dogum_tarihi DateTime? @db.Date
+
+  kullanici      Kullanici?
+  rezervasyonlar Rezervasyon[]
+
+  @@map("misafir")
+}
+
+model Personel {
+  id               Int       @id @default(autoincrement())
+  ad               String    @db.VarChar(50)
+  soyad            String    @db.VarChar(50)
+  gorev            String    @db.VarChar(50)
+  ise_giris_tarihi DateTime? @db.Date
+
+  kullanici Kullanici?
+
+  @@map("personel")
+}
+
+// Giris yapan hesap : Misafir veya Personele bagli
+model Kullanici {
+  id            Int          @id @default(autoincrement())
+  kullanici_adi String       @unique @db.VarChar(50)
+  sifre_hash    String       @db.VarChar(255)
+  rol           KullaniciRol
+  misafir_id    Int?         @unique
+  personel_id   Int?         @unique
+
+  misafir  Misafir?  @relation(fields: [misafir_id], references: [id])
+  personel Personel? @relation(fields: [personel_id], references: [id])
+
+  @@map("kullanici")
+}
+
+// Rezervasyon tablolari
+
+model Rezervasyon {
+  id               Int               @id @default(autoincrement())
+  misafir_id       Int
+  oda_id           Int
+  giris_tarihi     DateTime          @db.Date
+  cikis_tarihi     DateTime          @db.Date
+  kisi_sayisi      Int
+  durum            RezervasyonDurumu @default(beklemede)
+  olusturma_tarihi DateTime          @default(now())
+
+  misafir Misafir @relation(fields: [misafir_id], references: [id])
+  oda     Oda     @relation(fields: [oda_id], references: [id])
+
+  @@map("rezervasyon")
 }
