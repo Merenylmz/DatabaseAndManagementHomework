@@ -190,13 +190,13 @@ model Odeme {
 
 model Konaklama_Hizmeti {
   id Int @id @default(autoincrement())
-  konaklama_id Int?
-  ek_hizmet_id Int?
-  adet Int?
+  konaklama_id Int
+  ek_hizmet_id Int
+  adet Int
   zaman DateTime @default(now()) @db.Timestamp()
   
-  konaklama Konaklama? @relation(fields: [konaklama_id], references: [id])
-  ek_hizmet Ek_Hizmet? @relation(fields: [ek_hizmet_id], references: [id])
+  konaklama Konaklama @relation(fields: [konaklama_id], references: [id])
+  ek_hizmet Ek_Hizmet @relation(fields: [ek_hizmet_id], references: [id])
 
   @@map("konaklama_hizmeti")
 }
@@ -208,7 +208,7 @@ model Temizlik_Kaydi{
   temizlik_tarihi DateTime @default(now())
   durum String
 
-  oda Oda? @relation(fields: [oda_id], references: [id])
-  personel Personel? @relation(fields: [personel_id], references: [id])
+  oda Oda @relation(fields: [oda_id], references: [id])
+  personel Personel @relation(fields: [personel_id], references: [id])
   @@map("temizlik_kaydi")
 }
