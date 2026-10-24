@@ -4,5 +4,211 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
+}
+
+// Enumlar
+
+enum OdaDurumu {
+  bos
+  dolu
+  temizlikte
+  bakimda
+
+  @@map("oda_durumu")
+}
+
+enum KullaniciRol {
+  misafir
+  resepsiyon
+  yonetici
+
+  @@map("kullanici_rol")
+}
+
+enum RezervasyonDurumu {
+  beklemede
+  onayli
+  iptal
+  tamamlandi
+
+  @@map("rezervasyon_durumu")
+}
+
+enum OdemeTuru {
+  nakit
+  kredi_karti
+  havale
+
+  @@map("odeme_turu")
+}
+
+model OdaTipi {
+  id          Int     @id @default(autoincrement())
+  ad          String  @db.VarChar(50)
+  kapasite    Int
+  aciklama    String? @db.Text
+  temel_fiyat Decimal @db.Decimal(10, 2)
+
+  odalar          Oda[]
+  sezon_fiyatlari SezonFiyati[]
+
+  @@map("oda_tipi")
+}
+
+model Oda {
+  id           Int        @id @default(autoincrement())
+  oda_numarasi String     @unique @db.VarChar(10)
+  kat          Int
+  durum        OdaDurumu? @default(bos)
+  oda_tipi_id  Int
+
+  oda_tipi       OdaTipi       @relation(fields: [oda_tipi_id], references: [id])
+  rezervasyonlar Rezervasyon[]
+  temizlik_kayitlari Temizlik_Kaydi[]
+
+  @@map("oda")
+}
+
+model SezonFiyati {
+  id               Int      @id @default(autoincrement())
+  oda_tipi_id      Int
+  baslangic_tarihi DateTime @db.Date
+  bitis_tarihi     DateTime @db.Date
+  gecelik_fiyat    Decimal  @db.Decimal(10, 2)
+
+  oda_tipi OdaTipi @relation(fields: [oda_tipi_id], references: [id])
+
+  @@map("sezon_fiyati")
+}
+
+model Misafir {
+  id           Int       @id @default(autoincrement())
+  ad           String    @db.VarChar(50)
+  soyad        String    @db.VarChar(50)
+  kimlik_no    String    @unique @db.VarChar(20)
+  telefon      String?   @db.VarChar(20)
+  e_posta      String?   @db.VarChar(100)
+  dogum_tarihi DateTime? @db.Date
+
+  kullanici      Kullanici?
+  rezervasyonlar Rezervasyon[]
+
+  @@map("misafir")
+}
+
+model Personel {
+  id               Int       @id @default(autoincrement())
+  ad               String    @db.VarChar(50)
+  soyad            String    @db.VarChar(50)
+  gorev            String    @db.VarChar(50)
+  ise_giris_tarihi DateTime? @db.Date
+
+  kullanici Kullanici?
+  konaklamalar Konaklama[]
+  temizlik_kaydi Temizlik_Kaydi[]
+
+  @@map("personel")
+}
+
+model Kullanici {
+  id            Int          @id @default(autoincrement())
+  kullanici_adi String       @unique @db.VarChar(50)
+  sifre_hash    String       @db.VarChar(255)
+  rol           KullaniciRol
+  misafir_id    Int?         @unique
+  personel_id   Int?         @unique
+
+  misafir  Misafir?  @relation(fields: [misafir_id], references: [id])
+  personel Personel? @relation(fields: [personel_id], references: [id])
+
+  @@map("kullanici")
+}
+
+model Rezervasyon {
+  id               Int               @id @default(autoincrement())
+  misafir_id       Int
+  oda_id           Int
+  giris_tarihi     DateTime          @db.Date
+  cikis_tarihi     DateTime          @db.Date
+  kisi_sayisi      Int
+  durum            RezervasyonDurumu @default(beklemede)
+  olusturma_tarihi DateTime          @default(now())
+
+  misafir Misafir @relation(fields: [misafir_id], references: [id])
+  oda     Oda     @relation(fields: [oda_id], references: [id])
+
+  konaklamalar Konaklama[]
+
+  @@map("rezervasyon")
+}
+
+model Konaklama {
+  id Int @id @default(autoincrement())
+  rezervasyon_id    Int
+  personel_id       Int
+  gerceklesen_giris DateTime @default(now())
+  gerceklesen_cikis DateTime?
+  rezervasyon Rezervasyon @relation(fields: [rezervasyon_id], references: [id])
+  personel Personel @relation(fields: [personel_id], references: [id])
+  odemeler Odeme[]
+  konaklama_hizmeti Konaklama_Hizmeti[]
+
+  @@map("konaklama")
+}
+
+model Ek_Hizmet {
+  id Int @id @default(autoincrement())
+  ad String
+  fiyat Decimal @db.Decimal(10, 2)
+  konaklama_hizmet Konaklama_Hizmeti[] 
+
+  @@map("ek_hizmet")
+}
+
+model Islem_Log {
+  id Int @id @default(autoincrement())
+  tablo_adi  String
+  islem_turu String
+  eski_veri  Json?
+  yeni_veri  Json?
+  zaman DateTime @default(now()) @db.Timestamp()
+
+  @@map("islem_log")
+}
+
+model Odeme {
+  id Int @id @default(autoincrement())
+  konaklama_id  Int
+  tutar Decimal @db.Decimal(10, 2)
+  odeme_turu OdemeTuru
+  tarih DateTime  @default(now()) @db.Timestamp()
+  konaklama Konaklama @relation(fields: [konaklama_id], references: [id])
+
+  @@map("odeme")
+}
+
+model Konaklama_Hizmeti {
+  id Int @id @default(autoincrement())
+  konaklama_id Int
+  ek_hizmet_id Int
+  adet Int
+  zaman DateTime @default(now()) @db.Timestamp()
+  
+  konaklama Konaklama @relation(fields: [konaklama_id], references: [id])
+  ek_hizmet Ek_Hizmet @relation(fields: [ek_hizmet_id], references: [id])
+
+  @@map("konaklama_hizmeti")
+}
+
+model Temizlik_Kaydi{
+  id Int @id @default(autoincrement())
+  oda_id Int
+  personel_id Int
+  temizlik_tarihi DateTime @default(now())
+  durum String
+
+  oda Oda @relation(fields: [oda_id], references: [id])
+  personel Personel @relation(fields: [personel_id], references: [id])
+  @@map("temizlik_kaydi")
 }
