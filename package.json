@@ -7,7 +7,8 @@
     "build": "tsc --build",
     "start": "node ./dist/index.js",
     "dev": "nodemon ./src/index.ts",
-    "db:sql": "ts-node sql/calistir.ts"
+    "db:sql": "ts-node sql/calistir.ts",
+    "db:seed": "prisma db seed"
   },
   "keywords": [],
   "author": "",
@@ -33,5 +34,8 @@
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.9.3"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed/index.ts"
   }
 }
