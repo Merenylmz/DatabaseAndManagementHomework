@@ -5,17 +5,15 @@ BEGIN
         UPDATE oda 
         SET durum = 'dolu' 
         WHERE id = (SELECT oda_id FROM rezervasyon WHERE id = NEW.rezervasyon_id);
-        
     ELSIF TG_OP = 'UPDATE' AND NEW.gerceklesen_cikis IS NOT NULL AND OLD.gerceklesen_cikis IS NULL THEN
         UPDATE oda 
         SET durum = 'temizlikte' 
         WHERE id = (SELECT oda_id FROM rezervasyon WHERE id = NEW.rezervasyon_id);
     END IF;
-    
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
-
+DROP TRIGGER IF EXISTS trg_konaklama_oda_durumu ON konaklama;
 CREATE TRIGGER trg_konaklama_oda_durumu
 AFTER INSERT OR UPDATE ON konaklama
 FOR EACH ROW
