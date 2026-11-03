@@ -8,7 +8,7 @@
     "start": "node ./dist/index.js",
     "dev": "nodemon ./src/index.ts",
     "db:sql": "ts-node sql/calistir.ts",
-    "db:seed": "prisma db seed"
+    "db:seed": "ts-node prisma/seed/index.ts"
   },
   "keywords": [],
   "author": "",
