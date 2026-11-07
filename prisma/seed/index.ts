@@ -1,6 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 import { odaSeed } from "./oda";
 import { rezervasyonSeed } from "./rezervasyon";
+import { kullaniciSeed } from "./kullanici";
+import { personelSeed } from "./personel";
+import { ekHizmetSeed } from "./ek_hizmet";
+import { konaklamaSeed } from "./konaklama";
 
 
 const prisma = new PrismaClient();
@@ -9,6 +13,10 @@ const prisma = new PrismaClient();
 async function main() {
   await odaSeed(prisma);
   await rezervasyonSeed(prisma);
+  await kullaniciSeed(prisma);
+  await personelSeed(prisma);
+  await ekHizmetSeed(prisma);
+  await konaklamaSeed(prisma);
 
 }
 

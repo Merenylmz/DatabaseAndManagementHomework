@@ -1,0 +1,2 @@
+Bu dosyanın oluşturulma amacı Postman üzerinde herhangi bir yazım hatası olmadan bütün API endpointlerini birbirimiz ile paylaşmak
+bunu buradan yapmamızın nedeni ise Postman bu takım çalışması olayını ücretli hale getirmesi.
