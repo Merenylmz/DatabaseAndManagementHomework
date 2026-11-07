@@ -113,7 +113,7 @@ model Personel {
 
 model Kullanici {
   id            Int          @id @default(autoincrement())
-  kullanici_adi String       @unique @db.VarChar(50)
+  kullanici_adi String       @unique @db.VarChar(50) // email olarakta geçer
   sifre_hash    String       @db.VarChar(255)
   rol           KullaniciRol
   misafir_id    Int?         @unique
