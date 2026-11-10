@@ -6,6 +6,8 @@ import startServer from "./utils/startServer";
 import { errorHandler } from "./middlewares/errorHandler";
 import { ApiResponse } from "./utils/ApiResponse";
 
+import ekhizmetRoutes from "./routes/ekHizmet.routes";
+
 dotenv.config();
 const app = express();
 
@@ -21,6 +23,8 @@ app.get("/api/health", async(req: Request, res: Response, next: NextFunction)=>{
         next(error);
     }
 })
+
+app.use("/api/ekhizmet", ekhizmetRoutes);
 
 
 startServer();
