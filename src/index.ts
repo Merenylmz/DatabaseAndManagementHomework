@@ -7,6 +7,7 @@ import { errorHandler } from "./middlewares/errorHandler";
 import { ApiResponse } from "./utils/ApiResponse";
 
 import ekhizmetRoutes from "./routes/ekHizmet.routes";
+import personelRoutes from "./routes/personel.routes";
 
 dotenv.config();
 const app = express();
@@ -25,6 +26,7 @@ app.get("/api/health", async(req: Request, res: Response, next: NextFunction)=>{
 })
 
 app.use("/api/ekhizmet", ekhizmetRoutes);
+app.use("/api/personel", personelRoutes);
 
 
 startServer();
