@@ -8,6 +8,7 @@ import { ApiResponse } from "./utils/ApiResponse";
 
 import ekhizmetRoutes from "./routes/ekHizmet.routes";
 import personelRoutes from "./routes/personel.routes";
+import misafirRoutes from "./routes/misafir.routes";
 
 dotenv.config();
 const app = express();
@@ -27,6 +28,7 @@ app.get("/api/health", async(req: Request, res: Response, next: NextFunction)=>{
 
 app.use("/api/ekhizmet", ekhizmetRoutes);
 app.use("/api/personel", personelRoutes);
+app.use("/api/misafir", misafirRoutes);
 
 
 startServer();
