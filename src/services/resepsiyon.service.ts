@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { $Enums, OdemeTuru, PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -118,4 +118,65 @@ const temizlikKaydiEkle = async(odaId:number, kullaniciId: number, durum: string
     return registry;
 }
 
-export {gunlukResepsiyonIslemleriniGetir, checkInService, konaklamaHizmetEkle, temizlikKaydiEkle};
+const checkOutService = async(konaklamaId: Number, odemeTuru: OdemeTuru) =>{
+    const validPaymentTypes: OdemeTuru[] = ['nakit','havale','kredi_karti'];
+    if (!validPaymentTypes.includes(odemeTuru)) {
+        throw new Error('Geçersiz Ödeme Türü. (Nakit, Havale/ EFT veya Kredi Kartı)');        
+    }
+
+    return await prisma.$transaction(async(tx)=>{
+        const accomodation = await tx.konaklama.findUnique({
+            where: {id: Number(konaklamaId)},
+            include: {rezervasyon: true}
+        });
+
+        if (!accomodation) {
+            throw new Error('Konaklama kaydı bulunamadı.');
+        }
+
+        if (accomodation.gerceklesen_cikis !== null) {
+            throw new Error('Bu konaklama için zaten check-out yapılmış.');
+        }
+
+        const result = await tx.$queryRaw<{toplam_tutar: any}[]>`
+            SELECT fn_konaklama_toplam_tutar(${konaklamaId}::int) AS toplam_tutar
+        `;
+        const totalAmount = Number(result[0].toplam_tutar ?? 0);
+
+        const updatedAccomodation = await tx.konaklama.update({
+            where: {id: Number(konaklamaId)},
+            data: {
+                gerceklesen_cikis: new Date()
+            }
+        });
+
+        const payment = await tx.odeme.create({
+            data: {
+                konaklama_id: Number(konaklamaId),
+                tutar: totalAmount,
+                odeme_turu: odemeTuru
+            }
+        });
+
+        await tx.rezervasyon.update({
+            where: {id: accomodation.rezervasyon_id},
+            data:{
+                durum: "tamamlandi"
+            }
+        });
+
+        const updatedRoom = await tx.oda.update({
+            where: {id: accomodation.rezervasyon.oda_id},
+            data: {durum: 'temizlikte'}
+        });
+
+        return {
+            konaklama: updatedAccomodation,
+            hesaplanan_tutar: totalAmount,
+            odeme: payment,
+            oda: updatedRoom
+        }
+    });
+}
+
+export {gunlukResepsiyonIslemleriniGetir, checkInService, konaklamaHizmetEkle, temizlikKaydiEkle, checkOutService};

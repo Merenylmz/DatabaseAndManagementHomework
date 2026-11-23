@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import {checkInService, gunlukResepsiyonIslemleriniGetir, konaklamaHizmetEkle, temizlikKaydiEkle} from '../services/resepsiyon.service';
+import {checkInService, checkOutService, gunlukResepsiyonIslemleriniGetir, konaklamaHizmetEkle, temizlikKaydiEkle} from '../services/resepsiyon.service';
 import { AuthRequest } from '../middlewares/auth.middleware';
 
 const bugunkuHareketleriGetir = async(req: Request, res: Response) => {
@@ -84,4 +84,23 @@ const temizlikEkle = async(req: AuthRequest, res: Response) => {
     }
 };
 
-export {bugunkuHareketleriGetir, checkInYap, ekHizmetEkle_resepsiyon, temizlikEkle};
+const checkOutYap = async(req: AuthRequest, res: Response) =>{
+    try {
+        const { konaklama_id, odeme_turu } = req.body;
+        if (!konaklama_id || !odeme_turu) {
+            return res.status(400).json({
+                error: 'konaklama_id ve odeme_turu alanları zorunludur.',
+                status: false
+            });
+        }
+        const result = await checkOutService(Number(konaklama_id), odeme_turu);
+        res.status(200).json({
+            message: 'Check-out işlemi, ödeme ve oda güncellemesi başarıyla tamamlandı.',
+            ...result
+        });
+    } catch (error: any) {  
+        res.status(400).json({ hata: error.message });
+    }
+}
+
+export {bugunkuHareketleriGetir, checkInYap, ekHizmetEkle_resepsiyon, temizlikEkle, checkOutYap};

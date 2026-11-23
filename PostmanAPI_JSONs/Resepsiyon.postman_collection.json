@@ -116,6 +116,36 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Checkout İşlemi",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"konaklama_id\": 1,\n  \"odeme_turu\": \"kredi_karti\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/resepsiyon/check-out",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "resepsiyon",
+            "check-out"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }
