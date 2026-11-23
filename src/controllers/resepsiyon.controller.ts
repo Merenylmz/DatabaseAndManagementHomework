@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import {checkInService, gunlukResepsiyonIslemleriniGetir} from '../services/resepsiyon.service';
+import {checkInService, gunlukResepsiyonIslemleriniGetir, konaklamaHizmetEkle, temizlikKaydiEkle} from '../services/resepsiyon.service';
 import { AuthRequest } from '../middlewares/auth.middleware';
 
 const bugunkuHareketleriGetir = async(req: Request, res: Response) => {
@@ -36,4 +36,52 @@ const checkInYap = async(req: AuthRequest, res: Response) =>{
     }
 }
 
-export {bugunkuHareketleriGetir, checkInYap};
+const ekHizmetEkle_resepsiyon = async(req: Request, res: Response) => {
+    try {
+        const { konaklama_id, ek_hizmet_id, adet } = req.body;
+        if (!konaklama_id || !ek_hizmet_id || !adet) {
+            return res.status(400).json({
+                message: 'konaklama_id, ek_hizmet_id ve adet alanları zorunludur.',
+                status: false
+            });
+        }
+
+        const registry = await konaklamaHizmetEkle(Number(konaklama_id), Number(ek_hizmet_id), Number(adet));
+
+        res.status(201).json({
+            message: 'Ek Hizmet Konaklamaya eklendi.',
+            kayit:registry
+        });
+    } catch (error: any) {
+        res.status(400).json({
+            error: error.message,
+            status: false
+        });
+    }
+};
+
+const temizlikEkle = async(req: AuthRequest, res: Response) => {
+    try {
+        const { oda_id, durum, personel_id } = req.body;
+
+        if (!oda_id) {
+            return res.status(400).json({ error: 'oda_id alanı zorunludur.', status: false });
+        }
+
+        const registry = await temizlikKaydiEkle(Number(oda_id), req.user.id, durum || 'Temizlendi', personel_id ? Number(personel_id) : undefined);
+
+        res.status(201).json({
+            message: 'Temizlik kaydı oluşturuldu.',
+            status:true,
+            kayit: registry
+        });
+
+    } catch (error: any) {
+        res.status(400).json({
+            error: error.message,
+            status: false
+        });
+    }
+};
+
+export {bugunkuHareketleriGetir, checkInYap, ekHizmetEkle_resepsiyon, temizlikEkle};

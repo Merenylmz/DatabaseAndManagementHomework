@@ -56,6 +56,66 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Ek Hizmet Ekle",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"konaklama_id\": 1,\n    \"ek_hizmet_id\": 1,\n    \"adet\": 0\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/resepsiyon/ek-hizmet",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "resepsiyon",
+            "ek-hizmet"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Temizlik Ekle",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"oda_id\": 1,\n    \"durum\": \"Temizlendi\",\n    \"personel_id\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/resepsiyon/temizlik",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "resepsiyon",
+            "temizlik"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }
