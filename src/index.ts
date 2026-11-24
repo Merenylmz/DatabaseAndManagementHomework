@@ -10,6 +10,7 @@ import ekhizmetRoutes from "./routes/ekHizmet.routes";
 import personelRoutes from "./routes/personel.routes";
 import misafirRoutes from "./routes/misafir.routes";
 import rezervasyonRoutes from "./routes/resepsiyon.routes";
+import authRoutes from "./routes/auth.routes";
 import odaTipiRoutes from "./routes/odaTipi.routes";
 import odaRoutes from "./routes/oda.routes";
 import sezonFiyatiRoutes from "./routes/sezonFiyati.routes";
@@ -30,6 +31,7 @@ app.get("/api/health", async(req: Request, res: Response, next: NextFunction)=>{
     }
 })
 
+app.use("/api/auth", authRoutes)
 app.use("/api/ekhizmet", ekhizmetRoutes);
 app.use("/api/personel", personelRoutes);
 app.use("/api/misafir", misafirRoutes);

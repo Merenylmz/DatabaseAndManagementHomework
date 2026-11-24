@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 const prisma = new PrismaClient();
 
 
-const misafirKayitOl = async(veri: any) =>{
+const misafirKayitOlService = async(veri: any) =>{
     const hashedPassword = await bcrypt.hash(veri.sifre, 10);
 
     const newAccount = await prisma.$transaction(async(tx)=>{
@@ -36,7 +36,7 @@ const misafirKayitOl = async(veri: any) =>{
     return newAccount;
 };
 
-const girisYap = async(email: string, sifre: string) =>{
+const girisYapService = async(email: string, sifre: string) =>{
     const user = await prisma.kullanici.findFirst({
         where:{
             kullanici_adi: email,
@@ -47,11 +47,11 @@ const girisYap = async(email: string, sifre: string) =>{
     }
 
     const isItPasswordCorrect = await bcrypt.compare(sifre, user.sifre_hash);
-    if (isItPasswordCorrect) {
+    if (!isItPasswordCorrect) {
         throw new Error('Hatalı Şifre Girdiniz.');
     }
 
-    const token = jwt.sign({id: user.id, role: user.rol, email: user.kullanici_adi}, 
+    const token = jwt.sign({id: user.id, rol: user.rol, email: user.kullanici_adi}, 
         process.env.JWT_SECRET || '>@!sup3rG1zl1AN4t_ar.', {expiresIn: '12h'});
     
 
@@ -67,4 +67,4 @@ const girisYap = async(email: string, sifre: string) =>{
 };
 
 
-export {misafirKayitOl, girisYap};
+export {misafirKayitOlService, girisYapService};

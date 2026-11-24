@@ -6,6 +6,6 @@ export class ApiResponse<T> {
     }
 
     static error<T>(message:string, errors?:any){
-        return new ApiResponse(true, message, undefined, errors);
+        return new ApiResponse(false, message, undefined, errors);
     }
 }
