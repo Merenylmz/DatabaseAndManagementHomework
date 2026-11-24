@@ -11,6 +11,7 @@ import personelRoutes from "./routes/personel.routes";
 import misafirRoutes from "./routes/misafir.routes";
 import rezervasyonRoutes from "./routes/resepsiyon.routes";
 import odaTipiRoutes from "./routes/odaTipi.routes";
+import odaRoutes from "./routes/oda.routes";
 
 dotenv.config();
 const app = express();
@@ -33,6 +34,7 @@ app.use("/api/personel", personelRoutes);
 app.use("/api/misafir", misafirRoutes);
 app.use("/api/resepsiyon", rezervasyonRoutes);
 app.use("/api/oda-tipi", odaTipiRoutes);
+app.use("/api/oda", odaRoutes);
 
 
 startServer();
