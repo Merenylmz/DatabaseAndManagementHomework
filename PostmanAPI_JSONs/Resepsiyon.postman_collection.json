@@ -1,0 +1,151 @@
+{
+  "info": {
+    "_postman_id": "54ee158a-d1fa-460e-a536-4e1a3d6c489a",
+    "name": "Resepsiyon",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "27887104"
+  },
+  "item": [
+    {
+      "name": "Bugünkü Hareketler",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/resepsiyon/bugunku-hareketler",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "resepsiyon",
+            "bugunku-hareketler"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "CheckIn İşlemi",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"rezervasyon_id\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/resepsiyon/check-in",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "resepsiyon",
+            "check-in"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Ek Hizmet Ekle",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"konaklama_id\": 1,\n    \"ek_hizmet_id\": 1,\n    \"adet\": 0\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/resepsiyon/ek-hizmet",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "resepsiyon",
+            "ek-hizmet"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Temizlik Ekle",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"oda_id\": 1,\n    \"durum\": \"Temizlendi\",\n    \"personel_id\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/resepsiyon/temizlik",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "resepsiyon",
+            "temizlik"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Checkout İşlemi",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"konaklama_id\": 1,\n  \"odeme_turu\": \"kredi_karti\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/resepsiyon/check-out",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "resepsiyon",
+            "check-out"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

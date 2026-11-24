@@ -1,0 +1,1 @@
+# npx ts-node src/scripts/testRollback.ts şeklinde yazılıp test edilebilir.
