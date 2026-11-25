@@ -1,0 +1,427 @@
+{
+  "info": {
+    "name": "Oda",
+    "description": "Oda tipi, oda, sezon fiyatı ve boş oda arama uçları. Önce Giriş isteğini gönderin, token otomatik kaydedilir.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "url",
+      "value": "http://localhost:3002/api"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Giriş",
+      "item": [
+        {
+          "name": "Giriş (yönetici)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/auth/giris",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "auth",
+                "giris"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin1@otel.com\",\n  \"sifre\": \"personel123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Gelen token'ı koleksiyon değişkenine kaydet, diğer istekler bunu kullanır",
+                  "const cevap = pm.response.json();",
+                  "if (cevap.token) pm.collectionVariables.set(\"token\", cevap.token);"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Oda Tipi",
+      "item": [
+        {
+          "name": "Oda tiplerini listele",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/oda-tipi",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "oda-tipi"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Oda tipi ekle",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/oda-tipi",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "oda-tipi"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ad\": \"Kral Dairesi\",\n  \"kapasite\": 4,\n  \"aciklama\": \"Deniz manzaralı\",\n  \"temel_fiyat\": 8000\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Oda tipi güncelle",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/oda-tipi/:id",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "oda-tipi",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"temel_fiyat\": 1600\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Oda tipi sil",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/oda-tipi/:id",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "oda-tipi",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "99"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Oda",
+      "item": [
+        {
+          "name": "Odaları listele",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/oda",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "oda"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Oda ekle",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/oda",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "oda"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"oda_numarasi\": \"901\",\n  \"kat\": 9,\n  \"oda_tipi_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Oda güncelle",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/oda/:id",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "oda",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"durum\": \"bakimda\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Oda sil",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/oda/:id",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "oda",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "99"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Boş oda ara",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/oda/bos?giris=2026-12-01&cikis=2026-12-05&odaTipiId=2",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "oda",
+                "bos"
+              ],
+              "query": [
+                {
+                  "key": "giris",
+                  "value": "2026-12-01"
+                },
+                {
+                  "key": "cikis",
+                  "value": "2026-12-05"
+                },
+                {
+                  "key": "odaTipiId",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Sezon Fiyatı",
+      "item": [
+        {
+          "name": "Sezon fiyatlarını listele",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/sezon-fiyati",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "sezon-fiyati"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Sezon fiyatı ekle",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/sezon-fiyati",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "sezon-fiyati"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"oda_tipi_id\": 1,\n  \"baslangic_tarihi\": \"2027-06-01\",\n  \"bitis_tarihi\": \"2027-08-31\",\n  \"gecelik_fiyat\": 2500\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Sezon fiyatı güncelle",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/sezon-fiyati/:id",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "sezon-fiyati",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"gecelik_fiyat\": 2700\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Sezon fiyatı sil",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/sezon-fiyati/:id",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "sezon-fiyati",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "99"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
