@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import * as odaService from "../services/oda.service";
 import { ApiResponse } from "../utils/ApiResponse";
+import { bosOdaAraSchema } from "../dtos/oda.dto";
 
 const odalariListele = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -38,4 +39,15 @@ const odaSil = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export { odalariListele, odaEkle, odaGuncelle, odaSil };
+// GET isteğinde veri adreste gelir, validate sadece body'ye baktığı için şemayı burada çalıştırıyoruz
+const bosOdalariAra = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { giris, cikis, odaTipiId } = bosOdaAraSchema.parse(req.query);
+    const odalar = await odaService.bosOdalariAra(giris, cikis, odaTipiId);
+    res.status(200).json(ApiResponse.success("Boş odalar listelendi", odalar));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { odalariListele, odaEkle, odaGuncelle, odaSil, bosOdalariAra };
