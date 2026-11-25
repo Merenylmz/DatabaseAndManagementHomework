@@ -1,5 +1,17 @@
+import { Prisma } from "@prisma/client";
 import prisma from "../config/dbPrisma";
 import { OdaEkle, OdaGuncelle } from "../dtos/oda.dto";
+import { fonksiyonCagir } from "../utils/sqlCagir";
+
+// bos_odalar fonksiyonunun döndürdüğü satırın şekli
+type BosOda = {
+  oda_id: number;
+  oda_numarasi: string;
+  kat: number;
+  oda_tipi: string;
+  kapasite: number;
+  temel_fiyat: Prisma.Decimal;
+};
 
 const hata = (mesaj: string, statusCode: number) => Object.assign(new Error(mesaj), { statusCode });
 
@@ -53,4 +65,12 @@ const odaSil = async (id: number) => {
   return await prisma.oda.delete({ where: { id } });
 };
 
-export { odalariGetir, odaEkle, odaGuncelle, odaSil };
+const bosOdalariAra = async (giris: string, cikis: string, odaTipiId?: number) => {
+  return await fonksiyonCagir<BosOda>("bos_odalar", [
+    Prisma.sql`${giris}::date`,
+    Prisma.sql`${cikis}::date`,
+    Prisma.sql`${odaTipiId ?? null}::int`,
+  ]);
+};
+
+export { odalariGetir, odaEkle, odaGuncelle, odaSil, bosOdalariAra };
