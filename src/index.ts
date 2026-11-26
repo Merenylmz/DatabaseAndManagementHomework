@@ -15,6 +15,7 @@ import odaTipiRoutes from "./routes/odaTipi.routes";
 import odaRoutes from "./routes/oda.routes";
 import sezonFiyatiRoutes from "./routes/sezonFiyati.routes";
 import rezervasyonApiRoutes from "./routes/rezervasyon.routes";
+import raporRoutes from "./routes/rapor.routes";
 
 dotenv.config();
 const app = express();
@@ -41,6 +42,7 @@ app.use("/api/oda-tipi", odaTipiRoutes);
 app.use("/api/oda", odaRoutes);
 app.use("/api/sezon-fiyati", sezonFiyatiRoutes);
 app.use("/api/rezervasyon", rezervasyonApiRoutes);
+app.use("/api/rapor", raporRoutes);
 
 
 startServer();
