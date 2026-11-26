@@ -9,7 +9,7 @@ import { ApiResponse } from "./utils/ApiResponse";
 import ekhizmetRoutes from "./routes/ekHizmet.routes";
 import personelRoutes from "./routes/personel.routes";
 import misafirRoutes from "./routes/misafir.routes";
-import rezervasyonRoutes from "./routes/resepsiyon.routes";
+import resepsiyonRoutes from "./routes/resepsiyon.routes";
 import authRoutes from "./routes/auth.routes";
 import odaTipiRoutes from "./routes/odaTipi.routes";
 import odaRoutes from "./routes/oda.routes";
@@ -35,7 +35,7 @@ app.use("/api/auth", authRoutes)
 app.use("/api/ekhizmet", ekhizmetRoutes);
 app.use("/api/personel", personelRoutes);
 app.use("/api/misafir", misafirRoutes);
-app.use("/api/resepsiyon", rezervasyonRoutes);
+app.use("/api/resepsiyon", resepsiyonRoutes);
 app.use("/api/oda-tipi", odaTipiRoutes);
 app.use("/api/oda", odaRoutes);
 app.use("/api/sezon-fiyati", sezonFiyatiRoutes);
