@@ -6,8 +6,8 @@ const bugunkuHareketleriGetir = async(req: Request, res: Response) => {
     try {
         const list = await gunlukResepsiyonIslemleriniGetir();
         res.status(200).json({list, status: true});
-    } catch (error) {
-        res.status(500).json({status:false, message: error});
+    } catch (error: any) {
+        res.status(500).json({status:false, message: error.message || 'Hareketler alınamadı.'});
     }
 }
 
@@ -28,9 +28,9 @@ const checkInYap = async(req: AuthRequest, res: Response) =>{
             message: 'Check-in işlemi Başarıyla Tamamlanmıştır.',
             status: true
         });
-    } catch (error) {
+    } catch (error: any) {
         res.status(400).json({
-            message: error,
+            message: error.message|| 'Check-in sırasında hata oluştu.',
             status: false
         });
     }
@@ -54,7 +54,7 @@ const ekHizmetEkle_resepsiyon = async(req: Request, res: Response) => {
         });
     } catch (error: any) {
         res.status(400).json({
-            error: error.message,
+            error: error.message|| 'Ek hizmet eklenemedi.',
             status: false
         });
     }
@@ -78,7 +78,7 @@ const temizlikEkle = async(req: AuthRequest, res: Response) => {
 
     } catch (error: any) {
         res.status(400).json({
-            error: error.message,
+            error: error.message || 'Temizlik Eklenemedi',
             status: false
         });
     }
@@ -99,7 +99,7 @@ const checkOutYap = async(req: AuthRequest, res: Response) =>{
             ...result
         });
     } catch (error: any) {  
-        res.status(400).json({ hata: error.message });
+        res.status(400).json({ hata: error.message|| 'Check-out sırasında hata oluştu.' });
     }
 }
 

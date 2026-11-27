@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { kendiProfiliniGetir, kendiProfiliniGuncelle, misafirleriListele, yoneticiGuncelle, yoneticiSil} from '../controllers/misafir.controller';
 import { tokenControl, roleControl } from '../middlewares/auth.middleware';
+import { misafirGuncelleSchema } from '../dtos/misafir.dto';
+import { validate } from '../middlewares/validate';
 
 const router = Router();
 
@@ -9,7 +11,7 @@ router.put('/profil', tokenControl, roleControl(['misafir', 'yonetici']), kendiP
 
 
 router.get('/', tokenControl, roleControl(['yonetici']), misafirleriListele);
-router.put('/:id', tokenControl, roleControl(['yonetici']), yoneticiGuncelle);
+router.put('/:id', tokenControl, roleControl(['yonetici']), validate(misafirGuncelleSchema), yoneticiGuncelle);
 router.delete('/:id', tokenControl, roleControl(['yonetici']), yoneticiSil);
 
 export default router;

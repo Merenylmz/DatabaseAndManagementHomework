@@ -3,7 +3,7 @@ import { $Enums, OdemeTuru, PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 const gunlukResepsiyonIslemleriniGetir = async() => {
-    return await prisma.$queryRaw`SELECT * FROM vw_bugunku_hareketlear`;
+    return await prisma.$queryRaw`SELECT * FROM vw_bugunku_hareketler`;
 }
 
 const checkInService = async(rezervasyonId: number, kullaniciId: number, bodyPersonalId?: number) => {
