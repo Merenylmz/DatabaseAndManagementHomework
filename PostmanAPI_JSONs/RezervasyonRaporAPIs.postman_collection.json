@@ -1,0 +1,373 @@
+{
+  "info": {
+    "name": "Rezervasyon ve Rapor",
+    "description": "Rezervasyon, oda durumu, aylık rapor ve işlem geçmişi uçları. Önce uygun Giriş isteğini gönderin, token otomatik kaydedilir. Misafir uçları için önce auth/kayit ile bir misafir hesabı açın.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "url",
+      "value": "http://localhost:3002/api"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Giriş",
+      "item": [
+        {
+          "name": "Giriş (yönetici)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/auth/giris",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "auth",
+                "giris"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin1@otel.com\",\n  \"sifre\": \"personel123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Gelen token'ı koleksiyon değişkenine kaydet, diğer istekler bunu kullanır",
+                  "const cevap = pm.response.json();",
+                  "const token = cevap.token || (cevap.data && cevap.data.token);",
+                  "if (token) pm.collectionVariables.set(\"token\", token);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Giriş (resepsiyon)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/auth/giris",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "auth",
+                "giris"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"personel1@otel.com\",\n  \"sifre\": \"personel123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Gelen token'ı koleksiyon değişkenine kaydet, diğer istekler bunu kullanır",
+                  "const cevap = pm.response.json();",
+                  "const token = cevap.token || (cevap.data && cevap.data.token);",
+                  "if (token) pm.collectionVariables.set(\"token\", token);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Giriş (misafir)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/auth/giris",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "auth",
+                "giris"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"misafir@ornek.com\",\n  \"sifre\": \"misafir123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Gelen token'ı koleksiyon değişkenine kaydet, diğer istekler bunu kullanır",
+                  "const cevap = pm.response.json();",
+                  "const token = cevap.token || (cevap.data && cevap.data.token);",
+                  "if (token) pm.collectionVariables.set(\"token\", token);"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Rezervasyon",
+      "item": [
+        {
+          "name": "Rezervasyon oluştur",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/rezervasyon",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "rezervasyon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"oda_id\": 1,\n  \"giris_tarihi\": \"2027-01-10\",\n  \"cikis_tarihi\": \"2027-01-13\",\n  \"kisi_sayisi\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Rezervasyonlarım (misafir)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/rezervasyon/benim",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "rezervasyon",
+                "benim"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Geçmiş konaklamalar (misafir)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/rezervasyon/gecmis",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "rezervasyon",
+                "gecmis"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Rezervasyon iptal",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/rezervasyon/:id/iptal",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "rezervasyon",
+                ":id",
+                "iptal"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Rapor",
+      "item": [
+        {
+          "name": "Oda durumu",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/rapor/oda-durumu",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "rapor",
+                "oda-durumu"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Aylık rapor",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/rapor/aylik?yil=2026&ay=11",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "rapor",
+                "aylik"
+              ],
+              "query": [
+                {
+                  "key": "yil",
+                  "value": "2026"
+                },
+                {
+                  "key": "ay",
+                  "value": "11"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "İşlem geçmişi",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/rapor/islem-gecmisi?sayfa=1&limit=20",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "rapor",
+                "islem-gecmisi"
+              ],
+              "query": [
+                {
+                  "key": "sayfa",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "İşlem geçmişi (filtreli)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/rapor/islem-gecmisi?tablo=rezervasyon&islem=UPDATE&sayfa=1&limit=10",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "rapor",
+                "islem-gecmisi"
+              ],
+              "query": [
+                {
+                  "key": "tablo",
+                  "value": "rezervasyon"
+                },
+                {
+                  "key": "islem",
+                  "value": "UPDATE"
+                },
+                {
+                  "key": "sayfa",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
