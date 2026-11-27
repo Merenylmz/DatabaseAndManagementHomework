@@ -10,11 +10,16 @@ const misafirKayitOlService = async(veri: any) =>{
 
     const newAccount = await prisma.$transaction(async(tx)=>{
         const user = await tx.kullanici.create({
-            data:{
+            data: {
                 kullanici_adi: veri.e_posta || veri.kullanici_adi,
                 sifre_hash: hashedPassword,
-                rol: "misafir"
-            }
+                rol: "misafir",
+            },
+            select: {
+                id: true,
+                kullanici_adi: true,
+                rol: true,
+            },
         });
 
         const guest = await tx.misafir.create({

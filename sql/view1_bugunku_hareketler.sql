@@ -1,6 +1,6 @@
-DROP VIEW IF EXISTS vw_bugunku_hareketlear;
+DROP VIEW IF EXISTS vw_bugunku_hareketler;
 
-CREATE VIEW vw_bugunku_hareketlear AS
+CREATE VIEW vw_bugunku_hareketler AS
 SELECT 
     r.id AS rezervasyon_id,
     m.ad || ' ' || m.soyad AS misafir_ad_soyad,

@@ -1,0 +1,151 @@
+.resepsiyon-baslik {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.resepsiyon-baslik h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.resepsiyon-kart {
+  background: var(--yuzey);
+  border: 1px solid var(--cizgi);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.resepsiyon-kart h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.15rem;
+}
+
+.tablo-sarici {
+  overflow-x: auto;
+}
+
+.resepsiyon-tablo {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.resepsiyon-tablo th,
+.resepsiyon-tablo td {
+  text-align: left;
+  padding: 0.65rem 0.75rem;
+  border-bottom: 1px solid var(--cizgi);
+  white-space: nowrap;
+}
+
+.resepsiyon-tablo th {
+  color: var(--soluk);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.resepsiyon-tablo tr.secili-satir {
+  background: #eef6f7;
+}
+
+.islem-butonlar {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.btn-vurgu {
+  background: var(--vurgu);
+  color: #ffffff;
+  border-color: var(--vurgu);
+}
+
+.btn-vurgu:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.btn-vurgu:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.etiket {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid var(--cizgi);
+  background: var(--arka);
+}
+
+.islem-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.islem-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.form-alan {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.form-alan label {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.form-alan input,
+.form-alan select {
+  width: 100%;
+  box-sizing: border-box;
+  font: inherit;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--cizgi);
+  border-radius: 6px;
+  background: var(--yuzey);
+  color: var(--yazi);
+}
+
+.form-alan input:focus,
+.form-alan select:focus {
+  outline: none;
+  border-color: var(--vurgu);
+}
+
+.makbuz-kutu {
+  margin-top: 0.85rem;
+  padding: 0.85rem;
+  border-radius: 6px;
+  border: 1px solid var(--basarili);
+  background: #f0f9f2;
+  font-size: 0.9rem;
+}
+
+.makbuz-kutu p {
+  margin: 0.2rem 0;
+}
+
+.makbuz-tutar {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--basarili);
+}
+
+@media (max-width: 860px) {
+  .islem-grid {
+    grid-template-columns: 1fr;
+  }
+}

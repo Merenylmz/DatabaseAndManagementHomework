@@ -7,6 +7,7 @@ import BulunamadiSayfasi from './pages/BulunamadiSayfasi'
 import YakindaSayfasi from './pages/YakindaSayfasi'
 import GirisSayfasi from './pages/giris/GirisSayfasi'
 import KayitSayfasi from './pages/kayit/KayitSayfasi'
+import ResepsiyonSayfasi from './pages/resepsiyon/ResepsiyonSayfasi'
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
             </Route>
 
             <Route element={<KorumaliSayfa roller={['resepsiyon', 'yonetici']} />}>
-              <Route path="/resepsiyon" element={<YakindaSayfasi baslik="Giriş/çıkış" />} />
+              <Route path="/resepsiyon" element={<ResepsiyonSayfasi />} />
               <Route path="/oda-durumu" element={<YakindaSayfasi baslik="Oda durumu" />} />
             </Route>
 
