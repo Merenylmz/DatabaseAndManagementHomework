@@ -1,5 +1,7 @@
 import { Prisma } from "@prisma/client";
+import prisma from "../config/dbPrisma";
 import { fonksiyonCagir, viewOku } from "../utils/sqlCagir";
+import { IslemGecmisiFiltre } from "../dtos/rapor.dto";
 
 // vw_oda_durumu view'ının döndürdüğü satırın şekli
 type OdaDurumu = {
@@ -40,4 +42,19 @@ const aylikRapor = async (yil: number, ay: number) => {
   };
 };
 
-export { odaDurumlari, aylikRapor };
+// Log tablosu hızla büyüdüğü için hepsini değil, istenen sayfayı en yeniden başlayarak getiriyoruz
+const islemGecmisi = async ({ tablo, islem, sayfa, limit }: IslemGecmisiFiltre) => {
+  const where = { tablo_adi: tablo, islem_turu: islem };
+  const [kayitlar, toplam] = await prisma.$transaction([
+    prisma.islem_Log.findMany({
+      where,
+      orderBy: { id: "desc" },
+      skip: (sayfa - 1) * limit,
+      take: limit,
+    }),
+    prisma.islem_Log.count({ where }),
+  ]);
+  return { kayitlar, toplam, sayfa, limit, toplam_sayfa: Math.ceil(toplam / limit) };
+};
+
+export { odaDurumlari, aylikRapor, islemGecmisi };
