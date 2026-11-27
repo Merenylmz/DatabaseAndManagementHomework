@@ -12,7 +12,6 @@ const personelEkle = async(dataset: any)=>{
             ad: dataset.ad,
             soyad: dataset.soyad,
             gorev: dataset.gorev,
-            kullanici_id: dataset.kullanici_id,
             ise_giris_tarihi: new Date()
         }
     });

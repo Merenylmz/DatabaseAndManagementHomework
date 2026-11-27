@@ -1,0 +1,40 @@
+:root {
+  --yazi: #1f2933;
+  --soluk: #616e7c;
+  --arka: #f5f7fa;
+  --yuzey: #ffffff;
+  --cizgi: #d9e2ec;
+  --vurgu: #1d6670;
+  --basarili: #2f7a3e;
+  --hata: #b42318;
+
+  font: 16px/1.5 system-ui, 'Segoe UI', Roboto, sans-serif;
+  color: var(--yazi);
+  background: var(--arka);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  color: var(--vurgu);
+}
+
+.sayfa {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.basarili {
+  color: var(--basarili);
+}
+
+.hata {
+  color: var(--hata);
+}

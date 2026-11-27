@@ -23,9 +23,7 @@ const ekHizmetGuncelle = async (id: number, dataset: ekHizmetSetType) => {
     const currentServices = await prisma.ek_Hizmet.findUnique({where:{id}});
     if (!currentServices) {throw new Error("Güncellenmek istenen hizmet bulunamadı")}
 
-    return await prisma.ek_Hizmet.update({where:{id}, data: {
-        dataset
-    }});
+    return await prisma.ek_Hizmet.update({where:{id}, data: dataset});
 }
 
 

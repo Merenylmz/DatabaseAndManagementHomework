@@ -1,5 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, KullaniciRol, Prisma } from "@prisma/client";
 import bcrypt from "bcrypt";
+
 
 export async function kullaniciSeed(prisma: PrismaClient) {
   console.log("--- Kullanıcılar Ekleniyor ---");
@@ -7,13 +8,13 @@ export async function kullaniciSeed(prisma: PrismaClient) {
   const ornekSifre = "personel123";
   const hashedPassword = await bcrypt.hash(ornekSifre, 10);
   
-  const kullaniciVerileri = [];
+  const kullaniciVerileri : Prisma.KullaniciCreateManyInput[] = [];
   
   for (let i = 1; i <= 50; i++) {
     kullaniciVerileri.push({
       kullanici_adi: `personel${i}@otel.com`,
       sifre_hash: hashedPassword,
-      rol: "PERSONEL",
+      rol: "resepsiyon",
     });
   }
 
@@ -21,10 +22,10 @@ export async function kullaniciSeed(prisma: PrismaClient) {
     kullaniciVerileri.push({
       kullanici_adi: `admin${i}@otel.com`,
       sifre_hash: hashedPassword,
-      rol: "ADMIN",
+      rol: "yonetici",
     });
   }
 
-  await prisma.kullanici.createMany({ data: (kullaniciVerileri as unknown as {id?: number, kullanici_adi: string, sifre_hash: string,rol: any }) });
+  await prisma.kullanici.createMany({ data: kullaniciVerileri});
   console.log(`${kullaniciVerileri.length} adet kullanıcı başarıyla eklendi.`);
 }
