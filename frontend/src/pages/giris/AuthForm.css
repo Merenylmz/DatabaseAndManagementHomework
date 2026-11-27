@@ -1,0 +1,89 @@
+.auth-kart {
+  max-width: 28rem;
+  margin: 2rem auto;
+  padding: 1.75rem;
+  background: var(--yuzey);
+  border: 1px solid var(--cizgi);
+  border-radius: 8px;
+}
+
+.auth-kart h1 {
+  margin: 0 0 0.35rem;
+  font-size: 1.4rem;
+}
+
+.auth-kart .soluk {
+  margin: 0 0 1.25rem;
+  font-size: 0.95rem;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.auth-satir {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0.75rem;
+}
+
+.auth-alan {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.auth-alan label {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.auth-alan input {
+  width: 100%;
+  box-sizing: border-box;
+  font: inherit;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--cizgi);
+  border-radius: 6px;
+  background: var(--yuzey);
+  color: var(--yazi);
+}
+
+.auth-alan input:focus {
+  outline: none;
+  border-color: var(--vurgu);
+}
+
+.auth-buton {
+  margin-top: 0.4rem;
+  padding: 0.6rem 1rem;
+  background: var(--vurgu);
+  color: #ffffff;
+  border-color: var(--vurgu);
+  font-weight: 500;
+}
+
+.auth-buton:hover:not(:disabled) {
+  opacity: 0.92;
+}
+
+.auth-buton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.auth-alt {
+  margin: 1.25rem 0 0;
+  font-size: 0.9rem;
+  text-align: center;
+  color: var(--soluk);
+}
+
+@media (max-width: 520px) {
+  .auth-satir {
+    grid-template-columns: 1fr;
+  }
+}

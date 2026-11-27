@@ -5,9 +5,9 @@ import OturumSaglayici from './oturum/OturumSaglayici'
 import AnaSayfa from './pages/ana-sayfa/AnaSayfa'
 import BulunamadiSayfasi from './pages/BulunamadiSayfasi'
 import YakindaSayfasi from './pages/YakindaSayfasi'
+import GirisSayfasi from './pages/giris/GirisSayfasi'
+import KayitSayfasi from './pages/kayit/KayitSayfasi'
 
-// Sayfanızı yazınca kendi satırınızdaki YakindaSayfasi'nı gerçek sayfayla değiştirin.
-// Menüdeki adresler (components/Menu.tsx) buradakilerle aynı olmalı.
 function App() {
   return (
     <OturumSaglayici>
@@ -15,8 +15,8 @@ function App() {
         <Routes>
           <Route element={<Duzen />}>
             <Route path="/" element={<AnaSayfa />} />
-            <Route path="/giris" element={<YakindaSayfasi baslik="Giriş yap" />} />
-            <Route path="/kayit" element={<YakindaSayfasi baslik="Kayıt ol" />} />
+            <Route path="/giris" element={<GirisSayfasi/>} />
+            <Route path="/kayit" element={<KayitSayfasi/>} />
 
             <Route element={<KorumaliSayfa roller={['misafir']} />}>
               <Route path="/arama" element={<YakindaSayfasi baslik="Oda ara" />} />
